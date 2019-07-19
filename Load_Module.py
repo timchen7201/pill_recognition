@@ -90,7 +90,7 @@ def verify_pill(image_path, identity, database, model):
     return dist
 
 def prepare_model():
-    PillModel=faceRecoModel(input_shape=(3,96,96))
+    PillModel=PillRecoModel(input_shape=(3,96,96))
     PillModel.compile(optimizer='adam',loss=triplet_loss,metrics=['accuracy'])
     load_weights_from_FaceNet(PillModel)
     return PillModel
