@@ -47,23 +47,22 @@ def getPicture(cnts,image,resized):
             cv2.imwrite("./pill_reciever_splited/output{}.jpg".format(str(i)),coin)
 
 def splite_image(filename):
+    #預先刪除資料夾的照片確保資料夾內是空的
     files = glob.glob("./pill_reciever_splited/*")
     for f in files:
         os.remove(f)
-    print(filename)
     image=cv2.imread(str("./pill_reciever_unsplited/"+filename))
     #resize
     r = 450.0 / image.shape[0]
     dim = (int(image.shape[1] * r), 450)
     resized = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
-    # img=resized
     #高斯
     gray=cv2.cvtColor(resized,cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (3, 3), 0)
-    # displayImg(blurred,"blurred")
     img=blurred
+    #Canny 運算子
     edged = cv2.Canny(img, 0, 150)
-    # displayImg(edged, "Edged")
+    #尋找輪廓
     (cnts, _) = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     print("I count {} pills in this image".format(len(cnts)))
     print(cnts[0].shape)## the coordinate of contours
