@@ -51,6 +51,7 @@ def splite_image(filename):
     files = glob.glob("./pill_reciever_splited/*")
     for f in files:
         os.remove(f)
+    #載入圖片
     image=cv2.imread(str("./pill_reciever_unsplited/"+filename))
     #resize
     r = 450.0 / image.shape[0]
